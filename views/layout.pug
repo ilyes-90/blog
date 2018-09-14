@@ -1,0 +1,14 @@
+doctype html
+html(lang="fr")
+  head
+    title Todo App
+    style
+      include ../node_modules/bootstrap/dist/css/bootstrap.css
+    block styles
+      style(src='../node_modules/bootstrap/dist/js/bootstrap.css')
+      style(src='../assets/css/style.css')
+    block scripts
+      script(src='../node_modules/bootstrap/dist/js/bootstrap.js')
+      script(src='../assets/js/app.js')
+  body
+    block content

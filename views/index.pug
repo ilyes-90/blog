@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  .main.container
+    .row
+      .col-md-6.offset-md-3
+        h1.display-4.m-b-2 You are logged in ! Congratulations !
+        if msg != ''
+          span.label.label-danger=msg
