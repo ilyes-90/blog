@@ -13,31 +13,40 @@ mongoose.connect('mongodb://localhost:27017/blog');
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
-  console.log('Time: ', Date.now());
-  next();
+    console.log('Time: ', Date.now());
+    next();
 });
 // define the home page route
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
     res.status(200).json({
-        message:"Authentificate yourself !"
+        message: "Authentificate yourself !"
     });
 });
 
-router.post('/register', function(req, res) {
-  let response = {};  
-  req.body.password = bcrypt.hashSync(req.body.password, 8);
-  let user = new Users(req.body);
-  user.save((err,result) => {
-    if (err) {
-      console.log(err);
-      return err;
-    } 
-    response = { status: false, error_code: 0, message: 'Unable to insert' };
-    if (result) {
-        response = { status: true, error_code: 0,result: result, message: 'Inserted successfully' };
-    }
-    res.json(response);
-  });
+router.post('/register', function (req, res) {
+    let response = {};
+    req.body.password = bcrypt.hashSync(req.body.password, 8);
+    let user = new Users(req.body);
+    user.save((err, result) => {
+        if (err) {
+            console.log(err);
+            return err;
+        }
+        response = {
+            status: false,
+            error_code: 0,
+            message: 'Unable to insert'
+        };
+        if (result) {
+            response = {
+                status: true,
+                error_code: 0,
+                result: result,
+                message: 'Inserted successfully'
+            };
+        }
+        res.json(response);
+    });
 });
 
 
@@ -56,5 +65,7 @@ router.post('/login', function(req, res) {
         return res.status(401).send({ auth: false, token: null });
     });
 });
+
+
 
 module.exports = router;
