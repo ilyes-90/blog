@@ -1,2 +1,28 @@
 https://scotch.io/@devGson/api-authentication-with-json-web-tokensjwt-and-passport
 http://docs.sequelizejs.com/
+########https://stackoverflow.com/questions/49503124/how-to-combine-passport-jwt-with-aclaccess-control-list-pattern########
+/*middleware/acl.js */
+
+export function checkRoleWithPassport(roles, passport, strategy, opts){
+  return function(req, res, next){
+    passport.authenticate(strategy, opts, function(err, user, info){                        
+      if(err) res.status(403).send('forbidden')                                             
+      else if(!user) res.status(403).send('forbidden')                                      
+      else{                                                                                 
+        if(roles.length == 0)                                                               
+          next()                                                                            
+        else if(roles.includes(user.role))                                                  
+          next()                                                                            
+        else                                                                                
+          res.status(403).send('forbidden')                                                 
+      }                                                                                     
+    })(req, res, next)                                                                                    
+  }                                                                                         
+}     
+
+/* route/index.js */
+app.get('/myapi', checkRoleWithPassport(['manager'], passport, 
+  'jwt', {session, false}), function(req, res){
+   ...
+})   // this should only allow the 'manager' to access /myapi
+##############################################################################################################################
