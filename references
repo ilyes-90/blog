@@ -3,6 +3,10 @@ http://docs.sequelizejs.com/
 ########https://stackoverflow.com/questions/49503124/how-to-combine-passport-jwt-with-aclaccess-control-list-pattern########
 /*middleware/acl.js */
 
+SSh Clients : 
+https://mobaxterm.mobatek.net/ **
+Bitvise
+
 export function checkRoleWithPassport(roles, passport, strategy, opts){
   return function(req, res, next){
     passport.authenticate(strategy, opts, function(err, user, info){                        
